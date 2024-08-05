@@ -2,6 +2,8 @@
 
 defaultmodel=$(dirname $0)/allamas_sorted_by_size.txt
 
+source $(dirname $0)/echo_formatted.sh
+
 echo_usage() {
   echo "Usage: ai [replay] <prompt> [<model> (default: $defaultmodel)]"
 }
@@ -41,12 +43,12 @@ if [ -z "$isreplay" ]; then
   if ! grep -Fq "$prompt"   ai-prompts.txt; then
             echo $prompt >> ai-prompts.txt
             echo         >> ai-prompts.txt
-            echo -e "\033[3;37m(new prompt added to ai-prompts.txt)\033[0m" >&2
+            echo_italics "(new prompt added to ai-prompts.txt)" >&2
   else
-            echo -e "\033[3;37m(prompt already in ai-prompts.txt)  \033[0m" >&2
+            echo_italics "(prompt already in ai-prompts.txt)"   >&2
   fi
 else
-  echo -e "\033[3;37mai \"$prompt\" $model\033[0m"
+  echo_italics "ai \"$prompt\" $model"
 fi
 
 ai_run_one() {
@@ -71,7 +73,7 @@ ai_run_one() {
     provider="ollama-run"
   fi
 
-  echo -e "\033[3;37m$provider $model\033[0m"
+  echo_italics "$provider $model"
 
   $provider $model "$prompt"
 }

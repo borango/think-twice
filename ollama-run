@@ -2,6 +2,8 @@
 
 # see https://github.com/ollama/ollama/blob/main/docs/faq.md
 
+source $(dirname $0)/echo_formatted.sh
+
 # if no arguments then print usage
 if [ -z "$1" ]; then
   echo "Usage: ollama-run.sh [model] <prompt>"
@@ -20,7 +22,7 @@ fi
 [ -z "$OLLAMA_HOST" ] && OLLAMA_HOST=localhost:11434
 
 if ! curl -s http://$OLLAMA_HOST/api/tags | jq -r '.models[].model' | grep -q $model; then
-	echo -e "\033[3;37m  skipping $model because it is not available (model not pulled or service unavailable)\033[0m" >&2
+	echo_italics "  skipping $model because it is not available (model not pulled or service unavailable)" >&2
   echo 
   exit 1
 fi
