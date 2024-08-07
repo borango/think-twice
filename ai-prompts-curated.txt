@@ -6,6 +6,8 @@ What is 2 + 3 ? Answer with a single number.
 
 solve the equation 'x*x = 9' for x. No explanations or comments, please.
 
+The barber shaves all people who do not shave themselves. Who shaves the barber? Answer with one short sentence only.
+
 did Gödel proove that any sufficiently capable logical system MAY or MUST be incomplete? Answer with one word only.
 
 
@@ -23,8 +25,10 @@ please test the semantic equality (not identity) of following two statements in 
 
 What is the meaning of life? Answer with one word only.
 
+Can you lie? Reply with a short sentence, please.
+
 #
-# Philosophy / Conversation
+# Philosophy / Conversation / Logic
 # GERMAN
 #
 
@@ -60,4 +64,7 @@ filter a javascript array to contain only unique values. give me the simplest so
 # BASH
 #
 
-bash: move more than 1 file to another directory without loop, with a 1-liner
+bash: move more than 1 file to another directory without loop, with a 1-liner. Reply without explanations or comments.
+
+bash: how to diff a file against the stdout of a process? Reply without explanations or comments.
+

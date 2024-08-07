@@ -1,5 +1,6 @@
 qwen2:0.5b
 tinyllama:latest
 qwen2:1.5b
+mistral:latest
 glm4:latest
 gpt-4o-mini
