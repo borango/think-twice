@@ -1,0 +1,5 @@
+qwen2:0.5b
+tinyllama:latest
+qwen2:1.5b
+glm4:latest
+gpt-4o-mini
