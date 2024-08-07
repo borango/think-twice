@@ -5,7 +5,7 @@ defaultmodel=$(dirname $0)/allamas_sorted_by_size.txt
 source $(dirname $0)/echo_formatted.sh
 
 echo_usage() {
-  echo "Usage: ai [replay] <prompt> [<model> (default: $defaultmodel)]"
+  echo "Usage: ai [replay | repeat | save] [<prompt>] [<model> (default: $defaultmodel)]"
 }
 
 # test whether at least one argument (the prompt) is provided
@@ -15,6 +15,34 @@ if [ $# -lt 1 ]; then
 fi
 
 prompt=$1
+
+save_prompt() {
+  if ! grep -Fq "$1"     $2; then
+    echo   -e "\n$1" >>  $2
+    echo_italics "(new prompt added to $2)" >&2
+  else
+    echo_italics "(prompt already in $2)"   >&2
+  fi
+}
+
+if [ "$prompt" == "save" ]; then # take last prompt from ai-prompts.txt
+  prompt="$(tail -n1 ai-prompts.txt)"
+  if [ -z "$prompt" ]; then
+    echo -e "\e[31mno previous prompt found in ai-prompts.txt\e[0m\n" >&2
+    exit 1
+  fi
+  save_prompt "$prompt" $(dirname $0)/ai-prompts-curated.txt
+  exit 0
+fi
+
+if [ "$prompt" == "repeat" ]; then # take last prompt from ai-prompts.txt
+  prompt="$(tail -n1 ai-prompts.txt)"
+  if [ -z "$prompt" ]; then
+    echo -e "\e[31mno previous prompt found in ai-prompts.txt\e[0m\n" >&2
+    exit 1
+  fi
+  isreplay=true
+fi
 
 if [ "$prompt" == "replay" ]; then # lookup the actual prompt in the curated list
   shift
@@ -26,8 +54,13 @@ if [ "$prompt" == "replay" ]; then # lookup the actual prompt in the curated lis
   keyword=$1
   prompt="$(grep $keyword $(dirname $0)/ai-prompts-curated.txt)"
   if [ -z "$prompt" ]; then
-    echo -e "\e[31mKeyword '$keyword' not found in ai-prompts-curated.txt\e[0m\n" >&2
-    exit 1
+    prompt="$(grep $keyword ai-prompts.txt)"
+    if [ -z "$prompt" ]; then
+      echo -e "\e[31mKeyword '$keyword' not found in ai-prompts[-curated].txt\e[0m\n" >&2
+      exit 1
+    else
+      echo_italics 'found in ai-prompts.txt\n'
+    fi
   fi
   isreplay=true
 fi
@@ -40,13 +73,7 @@ fi
 # add the prompt to the prompts file ONLY if it wasn't already there
 # and if we are not in replay mode alredy
 if [ -z "$isreplay" ]; then
-  if ! grep -Fq "$prompt"   ai-prompts.txt; then
-            echo $prompt >> ai-prompts.txt
-            echo         >> ai-prompts.txt
-            echo_italics "(new prompt added to ai-prompts.txt)" >&2
-  else
-            echo_italics "(prompt already in ai-prompts.txt)"   >&2
-  fi
+  save_prompt "$prompt" ai-prompts.txt
 else
   echo_italics "ai \"$prompt\" $model"
 fi
@@ -73,6 +100,7 @@ ai_run_one() {
     provider="ollama-run"
   fi
 
+  echo ________________________________
   echo_italics "$provider $model"
 
   $provider $model "$prompt"

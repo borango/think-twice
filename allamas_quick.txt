@@ -1,5 +1,3 @@
 qwen2:0.5b
 tinyllama:latest
 qwen2:1.5b
-codegemma:2b
-glm4:latest
