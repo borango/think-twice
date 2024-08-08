@@ -58,7 +58,6 @@ Wer ist König von Schottland? Antwort in einem Satz, bitte.
 
 filter a javascript array to contain only unique values. give me the simplest solution which does not create a Set or Map for this purpose. return no explanations and no examples - just return the pure javascript implementation without any comments.
 
-
 #
 # Programming
 # BASH
@@ -68,3 +67,9 @@ bash: move more than 1 file to another directory without loop, with a 1-liner. R
 
 bash: how to diff a file against the stdout of a process? Reply without explanations or comments.
 
+#
+# Programming
+# JQ
+#
+
+jq: how to add an additional field to an object?

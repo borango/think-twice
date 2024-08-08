@@ -27,14 +27,24 @@ if ! curl -s http://$OLLAMA_HOST/api/tags | jq -r '.models[].model' | grep -q $m
   exit 1
 fi
 
-# streaming response:
-# curl http://$OLLAMA_HOST/api/generate \
-#  --data "$( jq -cn '{  "model": $ARGS.positional[0], "prompt": $ARGS.positional[1]  }' --args "$model" "$prompt" )" \
+# ollama API
+# curl -s http://$OLLAMA_HOST/api/generate \
+#  --data "$( jq -cn '{  "model": $ARGS.positional[0], stream: false, options: {seed: 0, temperature: 0}, "prompt": $ARGS.positional[1]   }' --args "$model" "$prompt" )" \
+# | jq -r .response
+
+# echo
+
+# read extra parameters from file (if any)
+if [ -f "ai-extra-params.json" ]; then
+  extra_params=$(cat "ai-extra-params.json")
+else
+  extra_params="{}"
+fi
 
 # openai-like API
 curl -s http://$OLLAMA_HOST/v1/chat/completions \
   --header 'Content-Type: application/json' \
-  --data "$( jq -cn '{  "model": $ARGS.positional[0], options: { num_predict: 10 }, "messages": [ { "role": "user", "content": $ARGS.positional[1] } ]  }' --args "$model" "$prompt" )" \
+  --data "$( jq -cn '{  "model": $ARGS.positional[0], "messages": [ { "role": "user", "content": $ARGS.positional[1] } ]  } + ($ARGS.positional[2] | fromjson )' --args "$model" "$prompt" "$extra_params" )" \
 | jq -r '.choices[].message.content'
 
 # echo an empty line to be compatible with ollama CLI output and also to separate responses
