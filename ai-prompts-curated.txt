@@ -32,7 +32,7 @@ Can you lie? Reply with a short sentence, please.
 # GERMAN
 #
 
-Wer bin ich? Antwort in 5 worten, bitte.
+Wer bin ich? Antwort in 5 Worten, bitte.
 
 Wer rasiert den Barbier, der alle Männer rasiert die sich nicht selbst rasieren? Antwort in 5 Worten, bitte.
 
@@ -49,6 +49,8 @@ Who is the king of Scotland? Answer in one sentence, please.
 #
 
 Wer ist König von Schottland? Antwort in einem Satz, bitte.
+
+Wer ist Kaiser von China? Antwort in einem Satz, bitte.
 
 
 #
@@ -73,3 +75,5 @@ bash: how to diff a file against the stdout of a process? Reply without explanat
 #
 
 jq: how to add an additional field to an object?
+
+jq: how to turn a string into a JSON object?
