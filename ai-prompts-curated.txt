@@ -8,7 +8,7 @@ solve the equation 'x*x = 9' for x. No explanations or comments, please.
 
 The barber shaves all people who do not shave themselves. Who shaves the barber? Answer with one short sentence only.
 
-did Gödel proove that any sufficiently capable logical system MAY or MUST be incomplete? Answer with one word only.
+did Gödel prove that any sufficiently capable logical system MAY or MUST be incomplete? Answer with one word only.
 
 
 #
